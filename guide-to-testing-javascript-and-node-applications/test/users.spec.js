@@ -24,8 +24,14 @@ describe('The findUserByEmail function' , () => {
     })
 
     it('rejects with error if user with email was not found.', () => {
-        const actual = findUserByEmail('x@y.com')
+        return findUserByEmail('x@y.com').then(() => {
 
-        assert.notEqual(actual, new Error('User with email: x@y.com was not found.'))
+            assert.fail('Expected findUserByEmail function to reject')
+
+        }, error => {
+
+            assert.equal(error.message, 'User with email: x@y.com was not found.')
+
+        })
     })
 })
