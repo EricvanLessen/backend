@@ -30,5 +30,3 @@ This repository is licensed under the [MIT License](LICENSE). Feel free to use t
 ## Feedback and Support
 
 If you have any questions, suggestions, or need support, please feel free to open an issue in the repository. Your feedback is valuable and helps improve the quality of the practice projects.
-
-Happy coding!
