@@ -18,13 +18,13 @@ GraphQL is a query language and runtime for APIs that offers a flexible and effi
 
 This repository contains the following folders, each focusing on a specific aspect of GraphQL in Node.js:
 
-- [setup](https://github.com/EricvanLessen/graphql-node/setup): This folder provides the necessary setup instructions and dependencies for getting started with GraphQL in Node.js.
+- [setup](https://github.com/EricvanLessen/graphql-node/setup](https://github.com/EricvanLessen/backend-development-practice-projects/tree/main/graphql-node/setup): This folder provides the necessary setup instructions and dependencies for getting started with GraphQL in Node.js.
 
-- [types-and-schemas](https://github.com/EricvanLessen/graphql-node/types-and-schemas): This folder covers the creation and definition of types and schemas in GraphQL.
+- [types-and-schemas](https://github.com/EricvanLessen/graphql-node/](https://github.com/EricvanLessen/backend-development-practice-projects/tree/main/graphql-node/types-and-schemas): This folder covers the creation and definition of types and schemas in GraphQL.
 
-- [integrating-with-mongodb](https://github.com/EricvanLessen/graphql-node/integrating-with-mongodb): This folder demonstrates how to integrate GraphQL with MongoDB, a popular NoSQL database.
+- [integrating-with-mongodb](https://github.com/EricvanLessen/graphql-node/](https://github.com/EricvanLessen/backend-development-practice-projects/tree/main/graphql-node/integrating-with-mongodb): This folder demonstrates how to integrate GraphQL with MongoDB, a popular NoSQL database.
 
-- [integrating-with-sequelize](https://github.com/EricvanLessen/graphql-node/integrating-with-sequelize): This folder explores the integration of GraphQL with Sequelize, an Object-Relational Mapping (ORM) library for Node.js.
+- [integrating-with-sequelize]([https://github.com/EricvanLessen/graphql-node/](https://github.com/EricvanLessen/backend-development-practice-projects/tree/main/graphql-node/integrating-with-sequelize): This folder explores the integration of GraphQL with Sequelize, an Object-Relational Mapping (ORM) library for Node.js.
 
 Feel free to explore each folder to learn more about different aspects of working with GraphQL in Node.js and how to apply it in your own projects.
 
