@@ -64,7 +64,7 @@ The course is divided into several parts, each focusing on different aspects of 
 
 ## Running the App
 
-In the repository, you'll find basic TypeScript scripts in the folder `basic-ts-scripts` and a `gruntfile.ts` to define grunt steps.
+In the repository, you'll find basic TypeScript scripts in the folder `basic-ts-scripts` and a `gruntfile.js` to define grunt steps.
 
 The grunt file looks like this:
 
