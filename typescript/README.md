@@ -142,8 +142,8 @@ For individual TypeScript scripts located in the `typescript` sub-folder, you ca
 
 ## Working with the Gruntfile
 
-- **Understanding the Gruntfile**: The `gruntfile.ts` in the repository is a script that defines tasks for Grunt. It's configured to load the 'grunt-ts' plugin and compile TypeScript files located in the 'typescript' directory into a single JavaScript file in the 'javascript' directory.
-- **Running Grunt tasks**: After installing the necessary npm packages, you can execute the tasks defined in the `gruntfile.ts` using the `grunt` command.
+- **Understanding the Gruntfile**: The `gruntfile.js` in the repository is a script that defines tasks for Grunt. It's configured to load the 'grunt-ts' plugin and compile TypeScript files located in the 'typescript' directory into a single JavaScript file in the 'javascript' directory.
+- **Running Grunt tasks**: After installing the necessary npm packages, you can execute the tasks defined in the `gruntfile.js` using the `grunt` command.
 - **Dealing with Grunt not found errors**: If you encounter a 'grunt not found' error, ensure that Grunt is installed globally on your system and is added to your PATH. This can be done by adding it to the bash_profile or equivalent, depending on your system.
 
 ## Additional Scripts
@@ -157,5 +157,22 @@ For individual TypeScript scripts located in the `typescript` sub-folder, you ca
 - **Next Steps**: After familiarizing yourself with the provided scripts and the topics covered, consider starting your own TypeScript project or contributing to open-source TypeScript projects to gain practical experience.
 
 Your journey in TypeScript does not end here. There are many advanced concepts and features to explore. Stay curious and continue learning!
+
+Open Source TS e.g. 
+* https://github.com/excalidraw/excalidraw
+* https://github.com/calcom/cal.com
+
+* https://github.com/supabase/supabase
+
+* https://github.com/appwrite/appwrite
+
+* https://github.com/n8n-io/n8n
+
+* https://github.com/appsmithorg/appsmith
+
+* https://github.com/directus/directus
+
+* https://github.com/Budibase/budibase
+
 
 Enjoy your TypeScript journey!
