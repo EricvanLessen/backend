@@ -16,8 +16,6 @@ class Car {
 
     brand: string;
 
-
-
 }
 
 

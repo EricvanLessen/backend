@@ -2,7 +2,7 @@
 //
 // name = 12;
 //
-// name = "Edwin Diaz";
+// name = "Eric van Lessen";
 // let cars:  = ["Toyota", "BMW", "Mercedes"];
 //
 // cars = ["nissan"]
