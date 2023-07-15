@@ -12,8 +12,6 @@ logToConsole(somePromise);
 
 const value = 'string'
 
-
-
 // any value is not a promise, how to resolve a value: convert to a promise.
 const promisifiedValue = Promise.resolve(value);
 logToConsole(promisifiedValue);

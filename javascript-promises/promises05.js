@@ -17,8 +17,6 @@ a8.then(function(reason){
     console.log("Rejected: " + reason)
 })
 
-
-
 // function that returns a promise
 function sum(a,b) {
     const result = new Promise(function(resolve, reject) {

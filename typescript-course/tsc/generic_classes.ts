@@ -11,6 +11,7 @@ let array2: Array<string> = ["sadf", "dsaf"];
 
 /**
  * Represents a generic class that takes two types: TYPE1 and TYPE2.
+ * Second type must be a string parameter
  */
 class ObjectGenericsClass<TYPE1, TYPE2 extends string> {
   /**
