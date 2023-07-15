@@ -50,7 +50,6 @@ d ??= false  // d become to false
     A WeakRef object holds a weak reference to an object, known as its target or referent. 
     A weak reference to an object is one that does not prevent the object from being reclaimed 
     by the garbage collector.
-
     In contrast, normal (or strong) references hold objects in memory, and when an object no 
     longer has any strong references, the JavaScript engine’s garbage collector may destroy 
     the object and reclaim its memory. If this happens, you will no longer be able to get the 
