@@ -1,32 +1,97 @@
-# javascript promises
+# Promises
 
-JavaScript Promises Practice
-Welcome to the JavaScript Promises Practice repository! This repository contains a collection of short scripts that demonstrate the usage of JavaScript promises. These scripts serve as practice exercises to help you understand and master working with promises in JavaScript.
+This repository provides examples and explanations of working with Promises in JavaScript. Promises are a powerful asynchronous programming feature that simplifies handling asynchronous operations and enables better control flow and error handling.
 
-What are Promises?
-Promises are a powerful feature in JavaScript that allow you to handle asynchronous operations in a more organized and manageable way. Promises provide a way to write cleaner and more readable code when dealing with asynchronous tasks such as API calls, file operations, and more.
+## Usage
 
-Repository Structure
-The scripts in this repository are organized into separate files, each focusing on a specific aspect of working with promises. You can explore these files to gain a better understanding of how promises work and how to leverage their features in your own JavaScript projects.
+To run the code examples, simply execute the corresponding JavaScript files using Node.js:
 
-How to Use
-To get started, simply navigate to the desired script file and open it in your preferred JavaScript environment or browser console. Each script is self-contained and demonstrates a specific use case or concept related to promises.
+```bash
+node filename.js
+```
 
-Promises in JavaScript have different status (pending, fulfilled, or rejected)
-![status](./status.png)
+## Code Examples
 
-In JavaScript promises, the then() method is used to handle the fulfillment of a promise, and it takes two callback functions as arguments: the first one is for handling the successful fulfillment (onFulfilled), and the second one is for handling any errors or rejections (onRejected)
-![method](./method.png)
+### Example 1: Promises.all
 
-You can study the code and experiment with different variations to deepen your understanding of promises. Feel free to modify the scripts or create your own variations to practice and explore further.
+This example demonstrates the usage of `Promise.all`, which takes an array of Promises and returns a new Promise that is fulfilled with an array of resolved values from the input Promises. If any of the Promises in the input array rejects, the `Promise.all` immediately rejects with the reason of that rejected Promise.
 
-Contributions
-Contributions to this repository are welcome! If you have a script that demonstrates a unique use case or a concept related to promises, feel free to submit a pull request. Make sure to follow the contribution guidelines outlined in the repository's CONTRIBUTING.md file.
+```javascript
+// ...
 
-License
-This repository is licensed under the MIT License. Feel free to use the scripts for learning purposes, personal projects, or any other non-commercial uses.
+Promise.all([askFirstDealer(), askSecondDealer(), askThirdDealer()])
+    .then(prices => {
+        console.log(prices);
+    })
+    .catch(error => {
+        console.log(error);
+    });
 
-Feedback and Support
-If you have any questions, suggestions, or need support while working with the scripts, please feel free to open an issue in the repository. Your feedback is valuable and helps improve the quality of the practice scripts.
+// ...
+```
 
-Happy coding with JavaScript promises!
+### Example 2: Promise.race
+
+This example showcases `Promise.race`, which takes an array of Promises and returns a new Promise that is settled (fulfilled or rejected) as soon as any of the input Promises settles. The settled value or reason of the first resolved or rejected Promise will be the settled value or reason of the `Promise.race`.
+
+```javascript
+// ...
+
+Promise.race([askFirstDealer(), askSecondDealer(), askThirdDealer()])
+    .then(prices => {
+        console.log(prices);
+    })
+    .catch(reason => {
+        console.log(reason);
+    });
+
+// ...
+```
+
+Feel free to explore and modify the examples to deepen your understanding of Promises and their usage in JavaScript.
+
+### Testing with Mocha
+
+The repository also includes tests using the Mocha testing framework to ensure the correctness of Promise-related code. The tests utilize the Chai assertion library to make assertions on the behavior of Promises.
+
+The tests cover aspects of Promise handling, including fulfilled Promises, rejected Promises, and assertions on resolved values.
+
+Here's an example of a Mocha test case for Promises:
+
+```javascript
+const { expect } = require('chai');
+
+describe('Promise Tests', () => {
+  it('should resolve with the expected data', () => {
+    return fetchData()
+      .then(data => {
+        expect(data).to.have.property('message', 'Data fetched successfully');
+      });
+  });
+
+  it('should handle errors correctly', () => {
+    return fetchData()
+      .then(() => {
+        throw new Error('Unexpected resolution');
+      })
+      .catch(error => {
+        expect(error).to.be.an.instanceOf(Error);
+        expect(error.message).to.equal('Unexpected resolution');
+      });
+  });
+});
+```
+
+In this test, we assert that the Promise resolves with the expected data in the first test case. The second test case verifies that errors are handled correctly by asserting that an error is thrown and its message matches the expected value.
+
+Feel free to explore and modify the examples and tests to deepen your understanding of Promises and their usage in JavaScript.
+
+## License
+
+This repository is licensed under the MIT License. You are free to use, modify, and distribute the code in accordance with the terms of the license.
+
+## Contribution
+
+Contributions to improve and expand this repository are welcome! If you have any suggestions, bug reports, or enhancements, please submit an issue or a pull request. Let's learn and grow together!
+
+Happy coding with Promises!
