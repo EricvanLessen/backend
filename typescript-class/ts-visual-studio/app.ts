@@ -1,0 +1,7 @@
+class Example{
+
+
+    name:string;
+
+
+}
