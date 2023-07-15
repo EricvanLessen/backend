@@ -1,6 +1,7 @@
 var vehicle = {
     brand: "Mercedes",
-    engineType: 4.6
+    engineType: 4.6,
+    ps: 200
 };
-vehicle.brand = "";
-//# sourceMappingURL=object_types.js.map
+vehicle.brand = "Mercedes AMG";
+vehicle.ps = 350;

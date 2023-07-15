@@ -1,26 +1,30 @@
+/**
+ * Represents a Tree object.
+ */
 class Tree {
 
-
-    constructor(public leaf:string){
-
+    /**
+     * Creates an instance of Tree.
+     * @param leaf - The type of leaf.
+     */
+    constructor(public leaf: string) {
         this.leaf = leaf;
-
     }
 
-
-    public moveLeaf(){
-
-
-        console.log(`The ${this.leaf} is moving to the right`);
-
+    /**
+     * Moves the leaf.
+     */
+    public moveLeaf(direction: string) {
+        console.log(`The ${this.leaf} is moving to the ${direction}`);
     }
 
 }
 
-
+// Create a new Tree object with a green leaf
 let tree1 = new Tree("Green leaf");
 
-
+// Print the type of leaf of tree1
 console.log(tree1.leaf);
 
+tree1.moveLeaf("left")
 
