@@ -1,6 +1,3 @@
-/**
- * Created by edwin on 5/24/17.
- */
 var car = {
     brand: "BWM",
     engine: 3.4,

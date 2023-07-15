@@ -1,10 +1,6 @@
-/**
- * Created by edwin on 5/24/17.
- */
-
 let car = {
 
-    brand: "BWM",
+    brand: "BWM", // attribute is assigned a type automatically
     engine: 3.4,
     run: function(){
 
@@ -17,7 +13,7 @@ let car = {
 
 let house = "house";
 
-// house = 123;
+// house = 123; wont work
 
 
 
