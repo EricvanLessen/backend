@@ -27,7 +27,7 @@ let goToThisPage = function(msg){
 
     return new Promise((resolve, reject)=>{
 
-        resolve(" Go to edwindiaz.com");
+        resolve(" Go to Ericdiaz.com");
 
 
     });

@@ -4,7 +4,7 @@
 //
 // hello("HELLO");
 //
-// console.log('Edwin Diaz');
+// console.log('Eric van Lessen');
 //
 //
 // // asynchronous
@@ -53,7 +53,7 @@ myPromise.then((result)=>{
 });
 
 
-console.log('Edwin Diaz');
+console.log('Eric van Lessen');
 
 
 

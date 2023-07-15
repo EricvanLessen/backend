@@ -11,55 +11,27 @@
 <body>
    
    <script type="text/babel">
+        var cars = ['BMW', 'Mercedes', 'Ford'];
+        console.log(cars[0]);
 
-//       var cars = ['BMW', 'Mercedes', 'Ford'];
-//
-//
-//       console.log(cars[0]);
-//
+        var [bmw,,ford,,ferrari] = ['BMW', 'Mercedes', 'Ford', 'honda', 'ferrari'];
+        console.log(bmw, ferrari);
 
+        var {name, bio} = {
+            name: "Eric van Lessen",
+            bio: "A person"
+        };
+        console.log(name, bio);
 
-//        var [bmw,,ford,,ferrari] = ['BMW', 'Mercedes', 'Ford', 'honda', 'ferrari'];
-//
-//        console.log(bmw, ferrari);
-
-//            var {name, bio} = {
-//
-//                name: "Edwin Diaz",
-//                bio: "is a programming instructor"
-//
-//
-//
-//            };
-//
-//                console.log(name, bio);
-
-
-
-//                let person = {
-//
-//                    name: "Edwin Diaz",
-//                    bio: "is a programming instructor"
-//
-//
-//
-//                };
-//
-//               let displayData = ({name, bio}) =>{
-//
-//                   return `${name} ${bio}`;
-//
-//
-//               };
-//
-//               console.log(displayData(person));
-
-
-
-
-    </script>
+        let person = {
+            name: "Eric van Lessen",
+            bio: "A person"
+        };
+        let displayData = ({name, bio}) =>{
+            return `${name} ${bio}`;
+        };
+        console.log(displayData(person));
+   </script>
    
-   
-    
 </body>
 </html>
