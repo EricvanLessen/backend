@@ -12,10 +12,11 @@
 8. Testing with Cypress
 9. Express
 10. Middleware
-11. Socket.io
-12. Mongoose
-13. Node.js Parallelization
+11. Mongoose
+12. Socket.io
+13. Parallelization
 14. Grunt
+15. Docker
 
 ## Not covered
 1. Data caching eg with Redis
@@ -99,7 +100,7 @@ For each topic, prepare code snippets and examples that demonstrate your underst
 - Introduction to TypeScript syntax and features
 - Working with types, interfaces, and classes
 
-### Node.js Parallelization:
+### Parallelization:
 
 - Utilizing cluster module for parallel execution
 - Implementing worker threads and child processes
