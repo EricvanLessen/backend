@@ -1,41 +1,43 @@
-
-// then has a fullfillment function as firts argument if the promise was resolved. The function has one argument, that is the fillfilmment value
+// The Promise `a7` is resolved with the value 'Hello world'
 const a7 = new Promise(function(resolve, reject){
-    resolve('Hello world')
-})
+    resolve('Hello world');
+});
 
+// The `then` method is used to handle the fulfillment of the promise
 a7.then(function(value){
-    console.log("Resolved: " + value)
-})
+    console.log("Resolved: " + value);
+});
 
-// then has a rejection function as second argument if the promise was resolved. The function has one argument, that is the rejection reason
+// The Promise `a8` is rejected with the reason 'Hello world'
 const a8 = new Promise(function(resolve, reject){
-    reject('Hello world')
-})
+    reject('Hello world');
+});
 
-a8.then(function(reason){
-    console.log("Rejected: " + reason)
-})
+// The `then` method is used to handle the rejection of the promise
+a8.then(undefined, function(reason){
+    console.log("Rejected: " + reason);
+});
 
-// function that returns a promise
-function sum(a,b) {
+// A function `sum` is defined that returns a promise
+function sum(a, b) {
     const result = new Promise(function(resolve, reject) {
-        if (typeof a!== 'number' || typeof b !== 'number') {
+        if (typeof a !== 'number' || typeof b !== 'number') {
             return reject(new Error('Both arguments should be numbers'));
         }
-        return resolve(a+b)
+        return resolve(a + b);
     });
-    return result
+    return result;
 }
 
-sum(1,2).then(function(value){
+// The `then` method is used to handle the fulfillment or rejection of the promise returned by `sum`
+sum(1, 2).then(function(value){
     console.log('The result is ' + value);
-    }, function (reason) {
-        console.log('Error:' + reason);
-    })
+}, function (reason) {
+    console.log('Error: ' + reason);
+});
 
-sum('wrong','argument').then(function(value){
+sum('wrong', 'argument').then(function(value){
     console.log('The result is ' + value);
-    }, function (reason) {
-        console.log('Error:' + reason);
-    })
+}, function (reason) {
+    console.log('Error: ' + reason);
+});
