@@ -121,6 +121,8 @@ Integration testing is a software testing approach that focuses on evaluating th
 
 ### Integration Testing with Jest
 
+For integration testing, use eg cypress.
+
 Jest can be used for integration testing by leveraging its capabilities to test the interaction between different components, modules, or services of an application. Here's how you can perform integration testing with Jest:
 
 1. **Identify the Integration Points**: Determine the specific components or modules that need to be tested in combination.
