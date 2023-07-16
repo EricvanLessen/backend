@@ -1,4 +1,4 @@
-# 00 examples
+# Examples
 
 ## Topics:
 
