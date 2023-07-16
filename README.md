@@ -30,3 +30,5 @@ This repository is licensed under the [MIT License](LICENSE). Feel free to use t
 ## Feedback and Support
 
 If you have any questions, suggestions, or need support, please feel free to open an issue in the repository. Your feedback is valuable and helps improve the quality of the practice projects.
+
+This is an article about [How does NodeJS work](https://chaudharypulkit93.medium.com/how-does-nodejs-work-beginner-to-advanced-event-loop-v8-engine-libuv-threadpool-bbe9b41b5bdd)
