@@ -6,7 +6,6 @@
 2. Basic TypeScript
 3. Async Flow
 4. AWS Deployment Pipeline
-5. TypeScript Patterns
 6. ES6 to ES12
 7. Testing with Jest
 8. Testing with Cypress

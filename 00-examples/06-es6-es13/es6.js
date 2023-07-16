@@ -51,7 +51,6 @@ class Animal {
   * 3. Arrow function
   * () => {…}, which is short for function. 
   * Most importantly, he can make sure it’s always directed at himself，
-  * No more writing var self = this, var that = this, etc.!
 */
 
 const add = (a, b) => { return a + b};
