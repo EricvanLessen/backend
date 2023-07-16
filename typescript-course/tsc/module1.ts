@@ -7,7 +7,7 @@ namespace myNameSpace {
      * Variable: name
      * Description: A string variable that holds the name value.
      */
-    export const name = "Mariasssss";
+    export const name = "Maria";
 
     /**
      * Function: displayData
