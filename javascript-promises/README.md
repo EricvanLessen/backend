@@ -86,6 +86,30 @@ In this test, we assert that the Promise resolves with the expected data in the 
 
 Feel free to explore and modify the examples and tests to deepen your understanding of Promises and their usage in JavaScript.
 
+## Alternative Promise Libraries
+
+Promises are a fundamental part of asynchronous programming in JavaScript. While the native `Promise` class provides a solid foundation for working with promises, there are alternative promise libraries available that offer additional features and capabilities. This README provides an overview of three popular promise libraries: Bluebird, Q, and Lie.
+
+## Bluebird
+
+Bluebird is a feature-rich and performant promise library that aims to enhance the functionality of promises in JavaScript applications. It offers advanced features such as cancellation, timeouts, resource management, and more. Bluebird provides an extensive API and aims to be a drop-in replacement for native promises. You can find more information about Bluebird at [link to Bluebird's documentation].
+
+## Q
+
+Q is a popular promise library that provides a comprehensive set of features and utilities for working with promises. It offers additional functionality such as deferred promises, support for Node.js-style callbacks, and the ability to create custom promise implementations. Q's API is designed to be easy to use and understand, making it a popular choice for many developers. More details about Q can be found at [link to Q's documentation].
+
+## Lie
+
+Lie is a lightweight promise library that focuses on simplicity and minimalism. It aims to provide a small footprint while maintaining compatibility with the Promises/A+ specification. Lie is designed to be easy to understand and use, making it suitable for smaller projects or situations where a minimalistic promise implementation is preferred. You can explore more about Lie at [link to Lie's documentation].
+
+Please note that these alternative promise libraries are optional and not part of the JavaScript language itself. You can choose to use them based on your specific project requirements and preferences. The native `Promise` class is widely supported and recommended for most use cases, providing a solid foundation for working with promises in JavaScript.
+
+For detailed usage instructions and examples, please refer to the documentation of each respective library.
+
+---
+
+Feel free to update and expand upon this README to suit your specific needs and project requirements.
+
 ## License
 
 This repository is licensed under the MIT License. You are free to use, modify, and distribute the code in accordance with the terms of the license.
