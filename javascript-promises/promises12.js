@@ -1,17 +1,15 @@
-// static methods: promise.resolve and promise.reject
+// Static methods: Promise.resolve and Promise.reject
 function logToConsole(somePromise) {
-    somePromise.then(value => console.log(value));
+  somePromise.then(value => console.log(value));
 }
 
-const somePromise = new Promise(
-    (resolve, reject) => resolve('Hello')
-)
+const somePromise = Promise.resolve('Hello');
 
-// resolves the promise
+// Resolves the promise
 logToConsole(somePromise);
 
-const value = 'string'
+const value = 'string';
 
-// any value is not a promise, how to resolve a value: convert to a promise.
+// Converting a value to a promise using Promise.resolve
 const promisifiedValue = Promise.resolve(value);
 logToConsole(promisifiedValue);

@@ -16,22 +16,20 @@ function askThirdDealer() {
     });
 }
 
-// promise resolves if all promises are resolved or when this array contains no promise
-
-// [ 8000, 12000, 10000 ]
+// Promise resolves when all promises are resolved
 Promise.all([askFirstDealer(), askSecondDealer(), askThirdDealer()])
     .then(prices => {
-        console.log(prices)
+        console.log(prices);
     });
 
-//[ 1, 'string', true ]
+// Promise resolves with an array of results [1, 'string', true]
 Promise.all([1, "string", true])
     .then(results => {
-        console.log(results)
-    })
+        console.log(results);
+    });
 
-// []
+// Promise resolves with an empty array []
 Promise.all([])
-.then(results => {
-    console.log(results)
-})
+    .then(results => {
+        console.log(results);
+    });
