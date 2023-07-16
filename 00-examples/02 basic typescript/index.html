@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="node_modules/systemjs/dist/system.js"></script>
+
+</head>
+<body>
+
+<script>
+    /**
+     * Configures the SystemJS module loader.
+     */
+    SystemJS.config({
+        baseURL: '/',
+        packages: {
+            '/': {
+                defaultExtension: 'js'
+            }
+        }
+    });
+
+    /**
+     * Imports the 'app.js' module using SystemJS.
+     */
+    SystemJS.import('app.js');
+
+</script>
+
+</body>
+</html>
