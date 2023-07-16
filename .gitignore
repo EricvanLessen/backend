@@ -3,7 +3,7 @@ guide-to-testing-javascript-and-node-applications/coverage
 typescript-basics/node_modules
 es6/node_modules
 nodejs-api-basic/node_modules
-nodejs-api-nodeapi/node_modules
-nodejs-api-nodeapi/.env
+nodejs-api-nodeapi-mongoose/node_modules
+nodejs-api-nodeapi-mongoose/.env
 sockets.io-grunt/grunt-demo/node_modules
 sockets.io-grunt/node-sockets/node_modules
