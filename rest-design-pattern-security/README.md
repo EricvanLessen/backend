@@ -1,4 +1,4 @@
-# rest design patterns
+# Rest design pattern security
 
 ## This project uses
 - MongoDB
