@@ -3,54 +3,54 @@
 This repo is a track to cover
 
 **1. Rest Design Pattern Security**
-1.1 Evolution of RESTful services
-1.2 REST API Architectural Constraints
-1.3 Designing REST APIs
-1.4 REST API Error Handling Patterns
-1.5 REST API Handling Change - Versioning
-1.6 REST API Cache Control Patterns
-1.7 REST API Response Data Handling
-1.8 REST API Security
-1.9 REST API Specification using Swagger
-1.10 API Management
+1.1 Evolution of RESTful services<br>
+1.2 REST API Architectural Constraints<br>
+1.3 Designing REST APIs<br>
+1.4 REST API Error Handling Patterns<br>
+1.5 REST API Handling Change - Versioning<br>
+1.6 REST API Cache Control Patterns<br>
+1.7 REST API Response Data Handling<br>
+1.8 REST API Security<br>
+1.9 REST API Specification using Swagger<br>
+1.10 API Management<br>
 
 **2. RESTful API  With Express Framework Crash Course**
-2.1 APIs and server
-2.2 CRUD operations
+2.1 APIs and server<br>
+2.2 CRUD operations<br>
 
 **3. Node.js MVC, REST APIs, GraphQL, Deno**
-3.1 Basics
-3.2 Workflow and debugging
-3.3 Working with Express.js
-3.4 Dynamic content & adding template engines
-3.5 The Model View Controller (MVC)
-3.6 Enhancing the App
-3.7 Dynamic Routes & Advanced Models
-3.8 SQL Introduction
-3.9 Understanding Sequelize
-3.10 Working with NoSQL & Using MongoDB
-3.11 Working with Mongoose
-3.12 Session & Cookies
-3.13 Adding Authentication
-3.14 Sending Emails
-3.15 Advanced Authentication
-3.16 Understanding Validation
-3.17 Error Handling
-3.18 File Upload & Download
-3.19 Adding Pagination
-3.20 Async Requests
-3.21 Adding Payment
-3.22 Working with REST APIs - Basics
-3.24 Working with REST APIs - Practical Application
-3.25 Understanding Websockets & Socket.io
-3.26 Working with GraphQL
-3.27 Deploying
-3.28 Testing Node.js Applications
-3.29 Node.js as a Build Tool and Using npm
-3.30 Modern JavaScript & Node.js
-3.31 Node.js & TypeScript
-3.32 Introduction to Deno
-3.33 Deno, CRUD & Databases (MongoDB)
+3.1 Basics<br>
+3.2 Workflow and debugging<br>
+3.3 Working with Express.js<br>
+3.4 Dynamic content & adding template engines<br>
+3.5 The Model View Controller (MVC)<br>
+3.6 Enhancing the App<br>
+3.7 Dynamic Routes & Advanced Models<br>
+3.8 SQL Introduction<br>
+3.9 Understanding Sequelize<br>
+3.10 Working with NoSQL & Using MongoDB<br>
+3.11 Working with Mongoose<br>
+3.12 Session & Cookies<br>
+3.13 Adding Authentication<br>
+3.14 Sending Emails<br>
+3.15 Advanced Authentication<br>
+3.16 Understanding Validation<br>
+3.17 Error Handling<br>
+3.18 File Upload & Download<br>
+3.19 Adding Pagination<br>
+3.20 Async Requests<br>
+3.21 Adding Payment<br>
+3.22 Working with REST APIs - Basics<br>
+3.24 Working with REST APIs - Practical Application<br>
+3.25 Understanding Websockets & Socket.io<br>
+3.26 Working with GraphQL<br>
+3.27 Deploying<br>
+3.28 Testing Node.js Applications<br>
+3.29 Node.js as a Build Tool and Using npm<br>
+3.30 Modern JavaScript & Node.js<br>
+3.31 Node.js & TypeScript<br>
+3.32 Introduction to Deno<br>
+3.33 Deno, CRUD & Databases (MongoDB)<br>
 
 ## 1.Rest design pattern security
 
