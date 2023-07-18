@@ -61,7 +61,7 @@ This repo is a track to
 - Mulesoft
 - apigee
 
-## Evolution of RESTful services
+## 1.1. Evolution of RESTful services
 
 ### APIs
 - API developer portals examples
@@ -149,7 +149,7 @@ Here's an explanation of each method in one sentence:
 - Furthermore, API value chains promote collaboration and partnerships between organizations. By exposing APIs, companies can open up their services to potential partners, allowing them to integrate and build upon each other's offerings, leading to mutually beneficial relationships and business growth.
 
 
-## REST API Architectural Contraints
+## 1.2 REST API Architectural Contraints
 
 ### Architectural contraints overview
 - HTTP and json doesn't make an application RESTful, but maybe RESTlike or RESTish
@@ -246,5 +246,5 @@ Here's an explanation of each method in one sentence:
 - Webapps usually use GET and POST
 - RESTful use CRUD: create (POST), read (GET), update (PUT), delete (DELETE)
 
-## Designing REST API
+## 1.3 Designing REST API
 
