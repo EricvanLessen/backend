@@ -2,7 +2,7 @@
 
 This repo is a track to cover
 
-**1. Rest Design Pattern Security**
+**1. Rest Design Pattern Security**<br>
 1.1 Evolution of RESTful services<br>
 1.2 REST API Architectural Constraints<br>
 1.3 Designing REST APIs<br>
@@ -14,11 +14,11 @@ This repo is a track to cover
 1.9 REST API Specification using Swagger<br>
 1.10 API Management<br>
 
-**2. RESTful API  With Express Framework Crash Course**
+**2. RESTful API  With Express Framework Crash Course**<br>
 2.1 APIs and server<br>
 2.2 CRUD operations<br>
 
-**3. Node.js MVC, REST APIs, GraphQL, Deno**
+**3. Node.js MVC, REST APIs, GraphQL, Deno**<br>
 3.1 Basics<br>
 3.2 Workflow and debugging<br>
 3.3 Working with Express.js<br>
