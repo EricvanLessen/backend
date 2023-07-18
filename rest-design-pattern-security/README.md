@@ -52,7 +52,7 @@ This repo is a track to cover
 3.32 Introduction to Deno<br>
 3.33 Deno, CRUD & Databases (MongoDB)<br>
 
-## 1.Rest design pattern security
+## 1.Rest Design Pattern Security
 
 ## This project uses
 - MongoDB
