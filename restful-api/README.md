@@ -3,6 +3,7 @@
 This repo is a track to
 
 **1. Rest Design Pattern Security**<br>
+1.0 Credit goes to [REST-API-Course-V2](https://github.com/acloudfan/REST-API-Course-V2.git)
 1.1 Evolution of RESTful services<br>
 1.2 REST API Architectural Constraints<br>
 1.3 Designing REST APIs<br>
@@ -248,3 +249,497 @@ Here's an explanation of each method in one sentence:
 
 ## 1.3 Designing REST API
 
+### API Endpoint URL
+- Provides offer base urls subdomains such as https://api.paypal.com, https://app.ticketmaster.com, https://developer.uber.com, ...
+- logical grouping of resources can be https://domain/product/version/resource/{id} to manage teams, users can understand the API easier
+
+### Practices for Resource Names, Actions & Associations
+- Resource naming e.g. /businesses (yelp), /businesses/{id}, /people/{id} {linkedin}
+- Most apis use plurals for resource naming, follow a practice
+- Operations on a resource: CRUD, envoke the endpoints
+- Actions may not apply to a specific resource: /estimates/price, /friendships/lookup, api.spotify/v1/search
+- properties/{id}/roomTypes/{id}/amenities
+- Suggestion: restrict the nesting to three sources or use subqueries
+
+### Setup the API URI for ACME API
+- https://api.acme.com/v1/vacations
+- GET /vacations/destinations/{Bahamas}
+- Query parameters: GET /vacations/destinations?destination=Bahamas&?numberofdays=5
+
+### HTTP API Request flow and HTTP Status Code
+- Request with http header and body
+- Response with http header and body
+- Defined independently for each CRUD method in the Uniform Interface Contract (POST, GET, PUT DELETE)
+- Uniform contract: Endpoint, query paramters, request, response
+- Request: standard headers, custom headers, data format, request schema
+- Response: Https status, data format, response schema
+- Servers always sends a status code back in the header, a three digit number
+- Status code can take one of 5 classes
+- 1xx informations eg 100 continue
+- 2xx success e.g. 200 ok
+- 3xx not found e.g. 307 temporary redirect
+- 4xx client error e.g. 404 not found
+- 5xx server error e.g. 500 internal server error
+- Protocol about status codes are in RFC2616, use standard codes, don't invent own codes
+
+### Implementing REST API CRUD operations
+- POST Endpoint, resource representation, standard/custom headers, response code is eg 201 (created)/400 (missing field)/503 (database unreachable), response body return the new instance or a link to the resource instance
+- GET Endpoint, return one instance if the id is specified, query parameters, standard/custom headers, request body is optional, response to GET status code is eg 200 ok/404 resource not found/500 internal server error
+- PUT/PATCH update all of the resources of the resource, endpoint, parameters, body with update data, standard or custom header, PUT response status code is eg 200 success/201 created/204 no content/404/500/...
+- PATCH updates some of the attributes of the resource
+- DELETE endpoint, parameters, standard/custom headers, response to DELETE status code is 200 success (deleted)/204 success (no content in the body)/404/500/...
+- Can we use POST for updating: Twitter uses just GET and POST, these are guidelines 
+- 415: Format not supported
+
+### API Data Format Setup
+- Deliver most value for clients
+- JSON, XML, CSV, build for flexibility
+- One method to support multi data format: /news?output=json, /news?output=csv
+- One method to support multi data format: /application/json, application/csv (PayPal uses this)
+- One method to support multi data format: forecast/daily/{days}day.json, forecast/daily/{days}day.csv (the weather channel uses this)
+- Multiple data formats can be supported with query parameters, resource format suffix, or http headers
+
+### Setup the Demo/Test environment
+- Create a free MongoDB account and create ./part-1/db/clouddb.js file and use your credentials to write the following five lines in the file
+- const DB_USER = "xxxx"
+- const DB_PASSWORD = "xxxx"
+- const DB_NAME = "xxxx"
+- const CLUSTER_HOST = "xxx"
+- exports.DB_URI=`mongodb+srv://${DB_USER}:${DB_PASSWORD}@${CLUSTER_HOST}/${DB_NAME}?retryWrites=true&w=majority`
+
+### Recap
+- GET leads to retrieve a document
+- POST leads to create a document
+- The route is defined in api/v1/ and created as so: var URI = '/' + VERSION + '/' + RESOURCE_NAME; 
+- Recommended: to check the app to understand more, play with POSTMAN
+
+## 1.4 REST API Error Handling Patterns
+
+### REST API Error Handling Patterns
+- Application Errors: Status codes are defined in RFC2616, send a status code and reason-phrase, use the body or body for that
+- Standardize the status codes accross the APIs
+- Option 1: Error information only in the HTTP header, maybe use custom headers to send the error information (Etsy)
+- Option 2: All error information is contained in the body: Error information in standard format (Old versions of Facebook, depreciated)
+- Option 3: Error information in the header and in the body, if the status code is error 400 or 500, interpret the body as error message (Uber and most APIs use this approach)
+- How many codes should the API developer use: 10 codes should be enough eg 200 ok, 201 created, 400 bad request, 401 unauthorized, 403 forbidden, 404 not found, 415 unsupported media, 500 server error (Expedia support 14 status codes, TomTom traffic API supports 6 status codes)
+- Setup error format, developers may want to log the error codes to create reports, this is a common practice
+- The error response should be informative and actionable (what actions should be taken to fix the issue), the error response should be simple, and consistent
+- Provide links to the API documentation, provide hints about the error, send messages that may be presented directly to the end user
+- Define and use numeric application status codes, e.g. "error code = 7002, required field vacation description is missing", this error message status codes are reusable and the developers don't need to invent new ones
+- Error message can be an array of strings e.g. { ... , error: { code: 7000, text: "Message", hints: ["potential issues"], info:"link to more information"}}
+- Check examples e.g. of PayPal, Uber, ...
+- Response Envelope that can be empty if there are no errors e.g. { ... , error: {}}
+
+### Implementation of Error Handling for a POST API
+- A folder util holds the potential errors and compares them to the error from the database.
+- A function augments the response before the response gets send, we send an augmented error response (convert to specific errors)
+- Check out the branch and study the code, see part-0 README.md
+
+## 1.5 REST API Handling Change - Versioning
+
+### Handling changes to the API
+- Non breaking changes: Don't brake existing applications, an api may send more data
+- Breaking changes: E.g. change /data.deals to /data.discounts for the same resource would brake existing applications
+- API changes can e.g. be to add a parameters for limits (non braking)
+- API changes can e.g. be to change the HTTP verb from PUT to POST (braking changes)
+- Delete an operation, delete a route (braking changes)
+- Minor change: Doesn't require the app developer to change their application 
+- Major change: Does require the app develope to change their application e.g. additional parameters are required
+- Avoid changes and support backwards compatability (if possible), don't make frequent changes, version your API, focus on app developers
+
+### Versioning the API
+- Managing API Versioning
+- Versioning patterns for version specification
+- HTTP Header: API consumer can provide the version in a custom header x-myapi-version: 1.2
+- Query paramters: /post?version=1.2
+- URL path parameter: /v2/products
+- Use date 2020-02-02, number e.g. 2.8, or name e.g. v2
+- Support multiple versions in parallel
+
+### Versioning strategy
+- Introduce a new version and depreate another one, then retire the other one that is depreciated
+- Introduce a new version and depreate another one, then retire the other one that is depreciated ...
+- Always support at least one previous version to give developers time to access the new version e.g. 3 month
+- New developers can only access the new version
+- Present the news features, developers must understand the benefits of the new version
+- Create a roadmap for application developers
+
+## 1.6 REST API Cache Control Patterns
+
+### API Caching concepts and design decisions (1/2)
+- Who caches: Caching can be build on all touchpoints: Client, ISP, Gateway, Midtier server, DB Caching
+- Benefit of using cache: It improves performance, higher scalability/throughput
+- Scenario: 30 calls/second expected, 60 calls/seconds take place, data base allows 50 calls/second - caching may send answers from the Midtier without giving access to the database
+- The closer the caching is done to the API consumer, the better is the performance, and the higher is the scalability
+- Factors to keep in mind: Speed of change, time sensitivity, security
+- What to cache: html, jpeg, pdf, js, css can be cached for days/weeks
+- Stocks can't be cached in this sense, they are time sensitive
+- Newspaper are in the public domain, they are not time sensitive once they are out
+- Customer data: high security but doesn't change always, can be cached but not for long (security)
+- Vacation packages in our example: Will expire at some point, low security, data is in the public domain
+- Summary: Benefits are enhanced performance and higher scalability; considerations are speed of change, time sensitivity, security.
+- Design the caching implementation with this aspects in mind and decide with the following questions in mind.
+- What to cache? Consider the aspects above.
+- For how long can data be cached? Consider the aspects above.
+- Who can cache? The API is in control and can decide who can cache.
+- Which component should control the caching? Your API.
+
+### API Caching concepts and design decisions (2/2)
+- Cache-Control Directives: MUST b e obeyed by all caching mechanisms along the request/response chain
+- Request HTTP-Header Cache-Control Directives may ovveride the API directive
+- Cache-control: "directive1, directive2, ..."
+- Cache-Control: "private, max-age-60, ..."
+- Sensitive data should not be cached on intermediaries, private data is meant for a single user e.g. banking data
+- Set the Cache-Control to private: Cache-Control: "private", data gets stored only in the browser; its public by default
+- Sensitive data should not be stored anywhere: certain banking data, medical reports ... set Cache-Control: "no-store" to prevent any kind of caching on any kind of touchpoint
+- ETag header can be used to check if the data has changed, Cache-Control: "...", ETag: "received-value", data is send if it changed 
+- Cache-Control: "max-age=60" cached data is valid for 60 seconds
+- Use: private/public/no-store/no-cache/ETag/max-age ... check RFC2616 for further directives 
+
+### API Caching using Cache-Control Directive
+- The folder part-2 is a minimal server that implements caching on a /cachetest route
+
+## REST API Response Data Handling Patterns
+
+### Building support for Partial Responses
+- Granularity, API implementation
+- Typically the REST API provides one API for different clients e.g. notebook browser, mobile phone, ...
+- Different clients may not need all data e.g. due to smaller screen size, battery performance, cpu, memory
+- The client is in control of the response data, by telling the server what it needs
+- The server responses only with the needed sources
+- The client is in control of the granularity of the data
+- GraphQL is one solution for partial responses (Facebook)
+- Solution with Singe Query Paramters: /people/me?fields={Expression} defines the requested data (LinkedIn)
+- Multiple Query Parameter: Multipe query paramters to define filters, only, omit (Meetup)
+
+### Partial Responses in the ACME API
+- Checkout: git checkout partialresponse in the folder part-1
+- Run the example, insert ten values in the db: $node ./tests/TestHotelsDbOps.js insert
+- In MongoDB, projections are a feature that allows you to control which fields of a document should be returned in the result set when querying the database
+- db.collection.find({}, { name: 1, age: 1 }); // Include only the "name" and "age" fields in the result
+- db.collection.find({}, { address: 0, email: 0 }); // Exclude the "address" and "email" fields from the result
+- Similiarly, pagination can be realised with mongoDB (database) functionality and query parameters
+
+## 1.8 REST API Security
+
+### REST API Security - Introduction
+- Transaction authorized?
+- Who is the caller of the API?
+- Think about: Data theft, data manipulation, identity theft, DOS attack, ...
+- Data security: protect data from unauthorized theft and preserve the integrity of the data
+- The data in motion is in the scope of the REST API developer
+- Use TLS/HTTPS for REST API, do not allow self signed certificates
+
+### API Basic Authentication
+- API Consumer sends the credentials to the API server in the HTTP header
+- Authorization: Encoded-Cres, Base64 encoded, User: Password
+- Data in clear text are visible to "anyone", don's use basic auth with HTTP
+- Basic authentication weakness: The consumer sends the credentials in every request (or with sessions but that's against REST), credentials must not be stored on other devices e.g. mobile app
+- Passport.js is an authentication for library for node, e.g. social authentication, ...
+- Passport is non intrusive, supports multiple forms of authentication, offers built in support for social authentication
+- Decide where to store user data in a file, in LDAP, in a database
+- Read the example part-3 to study the basic auth example, add the authorization header in Postman, hit GET localhost:3000/private
+- Basic auth code example
+- The `base64EncodedCredentials` is a base64-encoded string of the format "username:password". Before encoding, the username and password are concatenated with a colon ":" separator.
+```javascript
+const axios = require('axios');
+const username = 'your_username';
+const password = 'your_password';
+
+const credentials = `${username}:${password}`;
+const base64EncodedCredentials = Buffer.from(credentials).toString('base64');
+
+axios.get('https://api.example.com/data', {
+  headers: {
+    Authorization: `Basic ${base64EncodedCredentials}`,
+  },
+})
+  .then((response) => {
+    // Handle the response
+    console.log(response.data);
+  })
+  .catch((error) => {
+    // Handle errors
+    console.error(error);
+  });
+```
+- Keep in mind that Basic Authentication is considered relatively insecure when used alone, as the credentials are sent as plain text (though encoded in base64). It is recommended to use it over secure connections (HTTPS) and to combine it with other security mechanisms like SSL/TLS and token-based authentication for better security.
+- HTTP status code 401 is sent back from basic auth in case of failure
+
+### Securing API with Tokens and JWT
+- JWT has three parts: Header.Payload.Signature
+- Payload Registered/Public/Private Claims
+- Header: {type: "JWT", alg: "HMAD"}, base64 encoded
+- Payload: Registered claims holds iss (issuer), exp (expiry timestamp), nbf (Not before timestamp)
+- Payload: Public claims to identify the API consumer e.g. name, email, phone_number
+- Payload: Private claim: agreed upon by consumer and provider, should not collide with predefined claims
+- The secret is used when concatenating the base64 header with the payload and hashing with the secret
+- The secret must be kept private
+- Packages for JWT: Many are available eg jwt-simple in the app (part-3, checkout tokens branch)
+- The secret is not part of the JWT web token
+- Claims are part of the Payload
+- Simple demo flow: 
+- 1. consumer invokes the token endpoint with the credentials in the body
+- 2. credentials are used to issue a token
+- 3. Token is stored to a in memory token store tokenstore.js
+- 4. Token is returned to the client
+- 5. Client calls a private route with the token in the header
+- 6. The token is validated against the token store
+- 7. The client is authorized
+
+## JWT Authentication Middleware
+- The code in part-3 branch "tokens" provides a JSON Web Token (JWT) authentication middleware that issues tokens for authenticated users. It uses the `jwt-simple` library for encoding and decoding JWTs.
+- Read the flow in the app to understand the flow
+- Token provision and server side storing via name, password in the body on the /token route
+- middleware with a validator for subsequent requests to /private to simulate a private resource
+- use the x-acme-token header and provide the base64 encoded token in the header
+- Run the code: npm i, then node app.js
+
+### Explanation
+- The code defines a set of JWT parameters and a function to issue tokens based on user credentials.
+- JWT Parameters: 
+
+```javascript
+var jwtParams = {
+    JWT_TOKEN_SECRET: 'whateversecret', // The secret key used to encode and decode JWTs
+    JWT_TOKEN_ISSUER: 'ACME Travels',  // The issuer of the token
+    ACME_TOKEN_HEADER: 'x-acme-token', // The custom header for storing the JWT in HTTP requests (not used in this code)
+    JWT_TOKEN_EXPIRY: 30,              // Set to expiry after 30 seconds
+};
+```
+
+#### `auth` Function
+```javascript
+var auth = function (req, res) {
+    // ... (code omitted for brevity)
+
+    if (user) {
+        // Authenticated
+
+        // Generate the token expiration time
+        var expires = moment().add(jwtParams.JWT_TOKEN_EXPIRY, 'seconds').valueOf();
+
+        // Create the payload (data to be stored in the token)
+        var payload = {
+            exp: expires,
+            iss: jwtParams.JWT_TOKEN_ISSUER,
+            name: user.name,
+            email: user.email
+        };
+
+        // Encode the token with the payload and secret key
+        var token = jwt.encode(payload, jwtParams.JWT_TOKEN_SECRET);
+
+        // Add the token to a token store (not shown in this code)
+
+        // Return the token to the caller
+        res.json({ token: token });
+    } else {
+        // User not found or password incorrect
+        res.sendStatus(401);
+    }
+};
+
+exports.auth = auth;
+exports.params = jwtParams;
+```
+
+### How to Use
+1. Import the `jwt-simple`, `moment`, `users`, and `tokenstore` modules.
+2. Set the JWT parameters (`JWT_TOKEN_SECRET`, `JWT_TOKEN_ISSUER`, and `JWT_TOKEN_EXPIRY`) based on your requirements.
+3. Call the `auth` function passing the user credentials (username and password) in the request body.
+4. If the user is authenticated, the function generates a JWT token and sends it back to the client.
+- Remember to implement the token store (`tokenstore`) to store
+- manage issued tokens securely, preventing token reuse and unauthorized access.
+
+**Note:** This code is a basic example for educational purposes only. In a real-world scenario, ensure you use secure practices, such as hashing passwords and implementing proper token storage, to enhance security and protect sensitive user data.
+
+### `user.js` - User Data and Authentication
+- This `user.js` file contains the hardcoded user data for testing authentication
+- Also containts a function to check user credentials against the stored data.
+
+### User Data
+```javascript
+// Hardcoded users for testing
+// Can be changed to store the users in a database
+var users = [
+    { id: 1, name: "jim", email: "jim@mail.com", password: "jim123" },
+    { id: 2, name: "sam", email: "sam@mail.com", password: "sam123" }
+];
+```
+
+The `users` array contains test user objects, each having an `id`, `name`, `email`, and `password` field. In a real-world scenario, this data would typically be stored in a database rather than hardcoded.
+
+### Authentication Functio
+```javascript
+var checkCredentials = function (username, password) {
+    // Check if username/password are valid
+    var user = users.find(function (u) {
+        return u.name === username && u.password === password;
+    });
+
+    return user;
+};
+
+exports.checkCredentials = checkCredentials;
+```
+
+The `checkCredentials` function takes a `username` and `password` as input and compares them against the `users` data to find a matching user. If the credentials are valid, the function returns the user object. Otherwise, it returns `undefined`.
+
+### How to Use
+1. To use this `user.js` file, import it in your main application file (e.g., `app.js`) where authentication is handled:
+
+```javascript
+var users = require('./path/to/user');
+```
+
+2. Call the `checkCredentials` function, passing the `username` and `password` as parameters:
+
+```javascript
+var user = users.checkCredentials('jim', 'jim123');
+```
+
+The `user` variable will contain the matching user object if the provided credentials are valid. If the credentials are invalid, `user` will be `undefined`.
+
+**Note:** In a real application, you would typically retrieve user data from a database, securely hash passwords, and implement additional security measures to protect user information. Hardcoding user data should only be used for testing and educational purposes.
+
+### jwtParams
+```javascript
+var jwtParams = {
+    JWT_TOKEN_SECRET: 'whateversecret', // Secret key used to encode and decode JWTs
+    JWT_TOKEN_ISSUER: 'ACME Travels',   // The issuer of the token
+    ACME_TOKEN_HEADER: 'x-acme-token',  // Custom header for storing the JWT in HTTP requests (not used in this code)
+    JWT_TOKEN_EXPIRY: 30,               // Expiry time for the JWT (set to expire after 30 seconds)
+};
+```
+
+1. `JWT_TOKEN_SECRET`: This parameter represents the secret key used to sign (encode) and verify (decode) JSON Web Tokens. It should be kept secure and should not be shared publicly.
+
+2. `JWT_TOKEN_ISSUER`: The issuer is the entity that issued the JWT. In this case, it's set to 'ACME Travels', indicating that tokens generated by this application are issued by ACME Travels.
+
+3. `ACME_TOKEN_HEADER`: This parameter indicates a custom header for storing the JWT in HTTP requests. However, this specific header is not used in the code provided.
+
+4. `JWT_TOKEN_EXPIRY`: The JWT token's expiration time, which is set to 30 seconds in this example. After this duration, the token will be considered invalid. The expiration time helps to limit the window of opportunity for attackers to misuse a stolen token.
+
+Remember to keep sensitive information like `JWT_TOKEN_SECRET` secure and avoid using short expiration times unless required for specific use cases (e.g., short-lived tokens for specific actions). In a real-world application, you may want to adjust the token expiration to a more appropriate value based on your application's security and usability requirements.
+
+### Securing API with API Key & Secret
+- Unlike in basic OAuth, the API consumer does not send the credentials, but API Key + Signature
+- The API provider stores a secret
+- API key = client id + client key
+- E.g. a signature gets hashed with a secret and the HTTP header as the payload on which the signature is applied
+- That signature is base64 encoded and the provider (e.g. Amazon with S3) validates using the secret
+- API Key and Secret is used in authentication, analytics, getting tokens (mobile application), rate limiting (calls/minute)
+- Decisions for API Key & Secret/Signature by the API designer: send in HTTP header, Query paramter, or Request body
+- Decisions for API Key & Secret/Signature by the API designer: API key & secret management e.g. database to store them, interface to validate
+- Decisions for API Key & Secret/Signature by the API designer: API key/secret provisioning to the application developer
+- Decisions for API Key & Secret/Signature by the API designer: How to do rate limiting and analytics
+- Can be challenging, so you might use an API Management platform to manage the API without writing the code in the API itself
+
+### OAuth 2.0
+- flexible authorization framework
+- defined in RFC6749
+- Uses different types of tokens
+- Describes 5 methods (grants) for acquiring access tokens
+- End user in control of their data (scope)
+- Application and provider need API Key & Secret
+- Used in Authorirization Scope Grant, sometimes refered to as social login scheme
+- Find an example of flows for various use cases on Microsoft [Token grant flows](https://learn.microsoft.com/en-us/azure/active-directory/develop/v2-oauth2-auth-code-flow)
+- Study the explicit flow utilized by the provider and use case as they are subject to design decision
+- OAuth2.0 design decisions: Scopes of user data (API), types of OAuth grants to be supported: Authorization, implicit Grant, client credentials
+- Implementing OAuth2.0 can take place manually but a OAuth2.0 service provider is recommended, OAuth2.0 is a defacto standard
+
+### OAuth 2.0 Grant Types (for reference)
+OAuth 2.0 defines five major grant types, also known as authorization flows, that provide different ways for clients (applications) to obtain access tokens from the authorization server. Each grant type is suited for different use cases and provides varying levels of security and user experience. Here's a brief description of the five major grant types in OAuth 2.0:
+
+** 1. Authorization Code Grant Type (Authorization Code Flow)**
+
+This is the most commonly used and secure OAuth 2.0 flow for web applications and confidential clients. It involves a two-step process:
+
+- The client redirects the user to the authorization server, which asks the user to log in and grant permission to the client.
+- After granting permission, the authorization server redirects the user back to the client with an authorization code. The client exchanges this code for an access token by sending a request to the authorization server, along with its client credentials.
+
+The authorization code is short-lived and prevents exposing the access token to the client's front-end. This flow is well-suited for server-to-server communication or situations where client secrets can be securely stored.
+
+** 2. Implicit Grant Type (Implicit Flow)**
+
+This flow is optimized for browser-based applications (Single-Page Applications) or mobile apps where the client runs on the user's device. It skips the step of exchanging an authorization code for an access token and directly returns the access token to the client as a URL fragment after the user grants permission. As a result, the access token is exposed to the client-side JavaScript.
+
+Since the access token is visible to the client, this flow is less secure than the Authorization Code Flow. Therefore, it's typically used for applications that don't have a secure server-side component.
+
+** 3. Resource Owner Password Credentials Grant Type (Password Flow)**
+
+This flow allows the client to obtain an access token by directly exchanging the user's username and password credentials with the authorization server. This means the client can act on behalf of the user without involving a redirect to the authorization server.
+
+The Password Flow should be used with caution, as it requires the client to handle the user's credentials directly. It is generally recommended only for trusted first-party applications where the client and authorization server belong to the same organization.
+
+** 4. Client Credentials Grant Type (Client Credentials Flow)**
+
+The Client Credentials Flow is used when the client itself (not on behalf of a user) needs to access protected resources. The client directly exchanges its client credentials (client ID and client secret) with the authorization server to obtain an access token.
+
+This flow is commonly used for machine-to-machine communication, where the client is a backend service that needs access to resources without user context.
+
+** 5. Refresh Token Grant Type (Refresh Token Flow)**
+
+The Refresh Token Flow allows clients to obtain a new access token without requiring the user to re-authenticate. After the initial authentication using one of the previous flows, the authorization server issues a refresh token along with the access token.
+
+When the access token expires, the client can use the refresh token to request a new access token, allowing for seamless, long-term access to protected resources without user involvement. Refresh tokens have a longer lifetime than access tokens and should be securely stored by the client.
+
+Each grant type has its own use case and security considerations, and it's essential to choose the appropriate flow based on your application's requirements and security needs.
+
+
+### Common Functional Attacks (for reference)
+In software development, functional attacks refer to various malicious activities that exploit vulnerabilities in an application's functionality to gain unauthorized access, manipulate data, or disrupt normal operations. Understanding and addressing these common functional attacks is crucial for building secure and robust applications. Here are some of the most prevalent functional attacks and their brief descriptions:
+
+**1. SQL Injection (SQLi)**
+
+SQL Injection occurs when an attacker inserts malicious SQL code into an application's input fields, allowing unauthorized access to a database or sensitive information. It takes advantage of improper input validation and can lead to data leaks, data manipulation, or even complete database compromise.
+
+**2. Cross-Site Scripting (XSS)**
+
+Cross-Site Scripting involves injecting malicious scripts into web pages viewed by other users. It targets client-side scripts executed by the victim's browser and can lead to theft of cookies, session hijacking, or other actions on behalf of the victim.
+
+**3. Cross-Site Request Forgery (CSRF)**
+
+Cross-Site Request Forgery occurs when a malicious site tricks a user's browser into making an unintended request to a target site where the user is authenticated. This attack can lead to unauthorized actions on the target site on behalf of the victim.
+
+**4. Remote Code Execution (RCE)**
+
+Remote Code Execution is an attack that allows an attacker to run arbitrary code on a vulnerable system. It typically occurs due to insecure deserialization or input validation, giving attackers unauthorized access and control over the application.
+
+**5. XML External Entity (XXE)**
+
+XML External Entity attacks exploit vulnerabilities in XML parsers, allowing attackers to read sensitive data, perform denial-of-service attacks, or escalate privileges by manipulating XML entities.
+
+**6. Security Misconfigurations**
+
+Security misconfigurations refer to mistakes made during the setup and configuration of applications, servers, or databases. These errors can expose sensitive information, grant excessive permissions, or create unnecessary attack surfaces.
+
+**7. Insecure Direct Object References (IDOR)**
+
+Insecure Direct Object References occur when an attacker can directly access or modify resources by manipulating references (e.g., IDs, filenames) in an application's URLs or parameters. This can lead to unauthorized access to sensitive data or actions.
+
+**8. Insecure File Upload**
+
+Insecure File Upload attacks exploit weaknesses in file upload mechanisms, allowing malicious files to be uploaded and executed on the server, potentially leading to remote code execution or unauthorized access.
+
+**9. Server-Side Request Forgery (SSRF)**
+
+Server-Side Request Forgery involves an attacker making requests from the target server to internal or external resources, leading to potential data exfiltration, service disruption, or attacks on internal systems.
+
+**10. Denial-of-Service (DoS and DDoS)**
+
+Denial-of-Service attacks aim to overwhelm a system or network, causing it to become unresponsive or unavailable. Distributed Denial-of-Service (DDoS) attacks use multiple sources to amplify the impact.
+
+**11. Fuzzing**
+
+Fuzzing is a security testing technique where automated tools inject random and invalid data into an application to identify vulnerabilities or crashes. It helps discover unknown flaws in an application by generating unexpected inputs and observing the application's behavior.
+
+### Solutions to functional attacks
+Protecting against functional attacks requires a combination of secure coding practices, input validation, output encoding, and proper security configurations. Regular security assessments, code reviews, and penetration testing are essential to identify and mitigate vulnerabilities in an application. By being aware of these common functional attacks and employing best security practices, developers can significantly reduce the risk of security breaches and safeguard sensitive data.
+- Follow best practice
+- Create a process for code review
+- Test & Monitor
+- Select a security model
+- Consider an API gateway or an API management solution
+- Set aside a budget for API testing

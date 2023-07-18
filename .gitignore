@@ -8,3 +8,11 @@ nodejs-api-nodeapi-mongoose/.env
 sockets.io-grunt/grunt-demo/node_modules
 sockets.io-grunt/node-sockets/node_modules
 00-examples/02-basic-typescript/node_modules
+restful-api/part-1/node_modules
+restful-api/part-2/node_modules
+restful-api/part-3/node_modules
+restful-api/part-1/db/clouddb.js
+restful-api/part-1/clouddb.js
+restful-api/part-2/clouddb.js
+restful-api/part-3/clouddb.js
+restful-api/db-clouddb.js
