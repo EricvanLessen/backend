@@ -113,4 +113,10 @@ Here's an explanation of each method in one sentence:
 
 
 ### REST API architectural constraints - client server
-- 
+- Client requests the resource
+- Server serves the resource on request, can be multiple clients
+- Client and server don't run in the same process space
+- The client makes requests through a network, they maintain the uniform interface, the contract
+- This is called 'seperation of concerns'
+- ![Image](./soc.png | width=300)
+
