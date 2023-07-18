@@ -1,6 +1,6 @@
 # RESTful
 
-This repo is a track to cover
+This repo is a track to
 
 **1. Rest Design Pattern Security**<br>
 1.1 Evolution of RESTful services<br>
