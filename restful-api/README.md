@@ -441,6 +441,7 @@ Here's an explanation of each method in one sentence:
 - Read the example part-3 to study the basic auth example, add the authorization header in Postman, hit GET localhost:3000/private
 - Basic auth code example
 - The `base64EncodedCredentials` is a base64-encoded string of the format "username:password". Before encoding, the username and password are concatenated with a colon ":" separator.
+
 ```javascript
 const axios = require('axios');
 const username = 'your_username';
