@@ -41,15 +41,15 @@ Overall, the combination of RESTful architecture and JSON data format provides a
 ### GET, POST, PUT, and DELETE methods. 
 Here's an explanation of each method in one sentence:
 
-GET: The GET method is used to retrieve data from a specified resource, and it should not have any side effects on the server (i.e., it should be safe and idempotent).
+- GET: The GET method is used to retrieve data from a specified resource, and it should not have any side effects on the server (i.e., it should be safe and idempotent).
 
-POST: The POST method is used to send data to the server to create or add a new resource, and it may have side effects on the server (i.e., it's not safe but idempotent).
+- POST: The POST method is used to send data to the server to create or add a new resource, and it may have side effects on the server (i.e., it's not safe but idempotent).
 
-PUT: The PUT method is used to update or replace an existing resource on the server with the data provided in the request.
+- PUT: The PUT method is used to update or replace an existing resource on the server with the data provided in the request.
 
-PATCH: The PATCH method is used to apply partial modifications to a resource on the server, allowing updates to specific fields or properties without replacing the entire resource.
+- PATCH: The PATCH method is used to apply partial modifications to a resource on the server, allowing updates to specific fields or properties without replacing the entire resource.
 
-DELETE: The DELETE method is used to request the removal of a specified resource from the server.
+- DELETE: The DELETE method is used to request the removal of a specified resource from the server.
 
 ### Why REST
 - Common set of principles
