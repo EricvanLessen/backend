@@ -1,4 +1,58 @@
-# Rest design pattern security
+# RESTful
+
+This repo is a track to cover
+
+**1. Rest Design Pattern Security**
+1.1 Evolution of RESTful services
+1.2 REST API Architectural Constraints
+1.3 Designing REST APIs
+1.4 REST API Error Handling Patterns
+1.5 REST API Handling Change - Versioning
+1.6 REST API Cache Control Patterns
+1.7 REST API Response Data Handling
+1.8 REST API Security
+1.9 REST API Specification using Swagger
+1.10 API Management
+
+**2. RESTful API  With Express Framework Crash Course**
+2.1 APIs and server
+2.2 CRUD operations
+
+**3. Node.js MVC, REST APIs, GraphQL, Deno**
+3.1 Basics
+3.2 Workflow and debugging
+3.3 Working with Express.js
+3.4 Dynamic content & adding template engines
+3.5 The Model View Controller (MVC)
+3.6 Enhancing the App
+3.7 Dynamic Routes & Advanced Models
+3.8 SQL Introduction
+3.9 Understanding Sequelize
+3.10 Working with NoSQL & Using MongoDB
+3.11 Working with Mongoose
+3.12 Session & Cookies
+3.13 Adding Authentication
+3.14 Sending Emails
+3.15 Advanced Authentication
+3.16 Understanding Validation
+3.17 Error Handling
+3.18 File Upload & Download
+3.19 Adding Pagination
+3.20 Async Requests
+3.21 Adding Payment
+3.22 Working with REST APIs - Basics
+3.24 Working with REST APIs - Practical Application
+3.25 Understanding Websockets & Socket.io
+3.26 Working with GraphQL
+3.27 Deploying
+3.28 Testing Node.js Applications
+3.29 Node.js as a Build Tool and Using npm
+3.30 Modern JavaScript & Node.js
+3.31 Node.js & TypeScript
+3.32 Introduction to Deno
+3.33 Deno, CRUD & Databases (MongoDB)
+
+## 1.Rest design pattern security
 
 ## This project uses
 - MongoDB
@@ -108,9 +162,6 @@ Here's an explanation of each method in one sentence:
 - Code on demand (optional): The server may send code that is executed by the client
 - RMM Richardson Maturity Model (RMM): measures the restfulness/REST compliance to a REST implementation
 - RMM goes from level 0 (low compliance) to level 3 (high compliance)
-- ![Image](./rmm.png | width=300)
-
-
 
 ### REST API architectural constraints - client server
 - Client requests the resource
@@ -118,5 +169,82 @@ Here's an explanation of each method in one sentence:
 - Client and server don't run in the same process space
 - The client makes requests through a network, they maintain the uniform interface, the contract
 - This is called 'seperation of concerns'
-- ![Image](./soc.png | width=300)
+- Server conerns: security, persistence, scaling, ...
+- Client concerns: authentication & authorization, multi form factor, application, ...
+- Decoupled architecture allows independent evolution
+
+### REST API architectural constraints - uniform interface
+- #1 Individual Resources: Resources are identified in the request (URI/URL), eg with parameters
+- #2 Representation of the Resources: Format on the server side is maybe not what the client needs, the server transforms the data
+- #3 Self descriptive messages - metadata: Client may set the accept header to application/json to inform that it accepts json formatted data
+- The API server may send metadata such as content-type of the payload, http status code, host information
+- #Hypermedia: The server can also send back hypermedia e.g. response data + actions (links for discovery)
+- All REST API resources are identified by a Uniform Resource Identifier e.g. /Cars/{vin}
+
+### REST API architectural constraints - statelessness
+- Client must manage it's own state thus making the server stateless
+- Not RESTful: The server may manage the client states in a session store on the server side
+- REST: Each client is responsible for managing its own state - simplifies, scalability, reduces resources
+- Server receives state info from the client
+- Server treats each request as independent
+- Requests are self-contained
+
+### REST API architectural constraints - caching
+- The client manages it's own state, this may lead to increased communication, increase of request data size, the performance may degrade 
+- The caching constraints suggests the use of caching to achieve scalability and performance
+- Cache location can be infront of the database (database caching), or in the server (server caching)
+- An application using the REST client can also cache the responses locally to avoid making calls, but use the local cache
+- Proxy and Gateways between the client and server may provide caching 
+- "Server should specify Cache-Control Directives in responses to control Caching behavior"
+- The server may mark responses as non-cachable
+- Cache-Control is a HTTP header for defining the cache policies
+- Eg "cache-control: public, max-age-31536000"
+- Cache control No-Store (no caching of response), private (only cache on user device), public (cache in any cache), max-age (time in seconds for expiry)
+- Expires header: Date/time for expiry
+- Last-Modified header: Date/time of last change
+- Etag header: Unique identifier associated with a response
+- Summary: Server controls caching behavior on client via cache directives, for HTTP specified via http-headers
+
+### REST API architectural constraints - layered system 
+- (Rest Client) Web tier, App tier, Database tier in
+- Web tier has a dependency on the App tier but is not aware of the App tier
+- Dependencies are unidirectional
+- Gateway is like a Webtier
+- Load balancer lays between Gateway and App tier
+- Layering simplifies the architecture - reduced dependencies
+- The architecture may evolve with the changing needs
+- Layer changes at most impacts ONE layer
+- One should build the API using the layered architectural approach
+
+### REST API architectural constraints - code on demand (optional constraint)
+- "Server can extend the functionality of client by sending Code"
+- E.g. the web app may send javascript, flash, or java applets, that get's executed in the browser 
+- For REST server, the server sends back the response instead of html, the server sends also code
+- HATEOAS: Hypertext As The Engine Of Application State
+- The idea behind HATEOAS is similiar to code on demand, client gets response that may contain hyperlinks
+- Actions that can be taken by the REST client are controlled by the REST server (eg sending specific links)
+- Server may add new functionalities
+- HATEOAS may come as json with links, method, and description e.g. a (generated) link to pay, refund, or cancel to manipulate the resources on the rest server
+
+### Richardson Maturity Model for REST API
+- A measure for restfulness
+- Level 3: Hypermedia control
+- Level 2: Resources + URI + HTTP Verbs, CRUD = HTTP Verbs
+- Level 1: Resources + URI
+- Levl 0: RPC
+- Swamp of POX: Plain Old XML means API uses the SOAP standard and uses XML as the data format
+- Resources: Representation of real-world object
+- Manipulation must be carried out with the right HTTP verb (GET, POST, DELETE, PUT, PATCH)
+- Level 3 HATEOAS: The REST client receives the object representation and the hypermedia links to manipulate the resources
+
+### WebApp versus REST API Architecture
+- WebApp and REST use the client server architecture, the layered approach, caching, code on demand and HATEOUS
+- Uniform interface: The webapp has no hard & fast rules on how to design the url of the resource
+- RESTful has strict rules on how the url should be defined
+- The webapp can manage the state locally in a persistant storage
+- In RESTful, the server doesn't manage the state
+- Webapps usually use GET and POST
+- RESTful use CRUD: create (POST), read (GET), update (PUT), delete (DELETE)
+
+## Designing REST API
 
