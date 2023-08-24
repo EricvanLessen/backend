@@ -8,7 +8,7 @@
         "start": "nodemon app.js",
         "start-server": "node app.js"
     },
-    "autor": "Eric van Lessen",
+    "author": "Eric van Lessen",
     "license": "ICS",
     "dependencies": {
         "nodemon": "^3.0.1"
