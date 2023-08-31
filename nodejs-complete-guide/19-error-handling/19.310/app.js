@@ -8,7 +8,7 @@ const MongoDBStore = require('connect-mongodb-session')(session)
 const csrf = require('csurf');
 const flash = require('connect-flash');
 
-const MONGODB_URI = "mongodb+srv://ericvanlessen:<password>‚@cluster0.1qzfncf.mongodb.net/shop"
+const MONGODB_URI = "mongodb+srv://ericvanlessen:oqX6AzhcPz0txF7s@cluster0.1qzfncf.mongodb.net/shop"
 
 const app = express();
 const store = new MongoDBStore({
@@ -39,6 +39,24 @@ app.use(session({
 
 app.use(csrfProtection);
 
+// helper middleware to create a mongoose session
+app.use((req, res, next) => {
+    if (!req.session.user) {
+        return next();
+    };
+    User.findById(req.session.user._id)
+    .then(user => {
+        if (!user) {
+            return next();
+        }
+        req.user = user;
+        next();
+    }).
+    catch((err) => {
+        // other problem than non existing user
+        throw new Error(err);
+    });
+})
 
 app.use((req, res, next) => {
     res.locals.isAuthenticated = req.session.isLoggedIn;
@@ -46,30 +64,19 @@ app.use((req, res, next) => {
     next();
 })
 
-// helper middleware to create a mongoose session
-app.use((req, res, next) => {
-    // throw new Error('Dummy') // this works here but not in async code
-    // must use next(new Error(err)) in async code
-    if (!req.session.user) {
-        return next();
-    };
-    User.findById(req.session.user._id)
-    .then(user => {
-        req.user = user;
-        next();
-    }).
-    catch((err) => {
-        // in async code, use next(new Error(err));
-        next(new Error(err));
-    });
-})
-
 app.use('/admin', adminRoutes.routes);
 app.use(shopRoutes);
 app.use(authRoutes);
 
+app.use('/500', errorController.get500);
+
 app.use(errorController.get404);
 
+// error hanlding middleware
+app.use((error, req, res, next) => {
+    /// res.render(error.httpStatusCode).render(...)
+    res.redirect('/500')
+})
 
 mongoose.connect(MONGODB_URI)
 .then(()  => {

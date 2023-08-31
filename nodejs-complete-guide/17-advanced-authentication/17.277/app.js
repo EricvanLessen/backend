@@ -8,7 +8,7 @@ const MongoDBStore = require('connect-mongodb-session')(session)
 const csrf = require('csurf');
 const flash = require('connect-flash');
 
-const MONGODB_URI = "mongodb+srv://ericvanlessen:JYAqHNk79C2tLk@cluster0.1qzfncf.mongodb.net/shop"
+const MONGODB_URI = "mongodb+srv://ericvanlessen:<password>@cluster0.1qzfncf.mongodb.net/shop"
 
 const app = express();
 const store = new MongoDBStore({

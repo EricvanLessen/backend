@@ -1,3 +1,8 @@
+const fs = require('fs');
+const path = require('path');
+
+const PDFDocument = require('pdfkit');
+
 const Product = require('../models/product');
 const Order = require('../models/order');
 
@@ -14,12 +19,9 @@ exports.getProducts = (req, res, next) => {
       path: '/products'
     });
   })
-  .catch(err => {
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    // moves right to the error middlewares on the bottom of app.js
-    return next(error)
-  })
+  .catch(err =>{
+    console.log(err);
+  });
 };
 
 exports.getIndex = (req, res, next) => {
@@ -78,12 +80,7 @@ exports.postCartDeleteProduct = (req, res, next) => {
   .then(result => {
     res.redirect('/cart');
   })
-  .catch(err => {
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    // moves right to the error middlewares on the bottom of app.js
-    return next(error)
-  })
+  .catch(err => console.log(err));
 }
 
 exports.postOrder = async (req, res, next) => {
@@ -106,12 +103,7 @@ exports.postOrder = async (req, res, next) => {
   .then(() => {
       res.redirect('/orders');
   })
-  .catch(err => {
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    // moves right to the error middlewares on the bottom of app.js
-    return next(error)
-  })
+  .catch(err => console.log(err))
 };
 
 exports.getOrders = (req, res, next) => {
@@ -123,11 +115,72 @@ exports.getOrders = (req, res, next) => {
       orders: orders
     });
   })
+  .catch(err => console.log(err));
+};
+
+exports.getInvoice = (req, res, next) => {
+  const orderId = req.params.orderId;
+  Order.findById(orderId)
+  .then((order)=>{
+    if(!order){
+      return next(new Error('No order found'));
+    } 
+    if (order.user.userId.toString() !== req.usr._id.toStrin()) {
+      return next(new Error('Unauthorized'));
+    }
+
+  const invoiceName = 'invoice-' + orderId + '.pdf';
+  const invoicePath = path.join('data', 'invoices', invoiceName);
+
+  const pdfDoc = new PDFDocument();
+  res.setHeader('Content-Type', 'application/pdf');
+  res.setHeader(
+    'Content-Disposition', 
+    'inline; filename="' + invoiceName + '"'
+  );
+  pdfDoc.pipe(fs.createWriteStream(invoicePath));
+  pdfDoc.pipe(res);
+
+  pdfDoc
+  .fontSize(26)
+  .text('Invoice', {
+    underline: true
+  });
+  pdfDoc.text('-----------------------');
+  let totalPrice = 0;
+  order.products.forEach(prod => {
+    totlaPrice += prod.quantity * prod.product.price;
+    pdfDoc
+    .fontSize(14)
+    .text(
+      prod.product.title + 
+      ' - ' + 
+      prod.quantitiy + 
+      ' x ' + 
+      '$' + 
+      prod.product.price
+    );
+  });
+  pdfDoc.text('---');
+  pdfDoc
+  .fontSize(20)
+  .text('Total Price: $' + totalPrice);
+
+  // close file and send
+  pdfDoc.end();
+  /*
+  fs.readFile(invoicePath, (err, data) => {
+    if (err) {
+      return next(err);
+    }
+    res.setHeader('Content-Type', 'application/pdf');
+    res.setHeader('Content-Disposition', 'inline; filename="' + invoiceName + '"');
+    res.send(data);
+  });
+  */
+  })
   .catch(err => {
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    // moves right to the error middlewares on the bottom of app.js
-    return next(error)
+    next(err);
   })
 };
 
