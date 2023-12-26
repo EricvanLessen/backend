@@ -1,5 +1,3 @@
-Certainly! Here's a template for a standard CONTRIBUTING.md file:
-
 # Contributing Guidelines
 
 Thank you for considering contributing to this project! We appreciate your time and effort. To ensure a smooth collaboration, please take a moment to review the following guidelines.
